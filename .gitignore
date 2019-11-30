@@ -1,0 +1,13 @@
+
+# VSCode
+.vscode/*
+
+
+# System Files
+.DS_Store
+
+# npm
+.eslintrc.json
+package-lock.json
+package.json
+node_modules
