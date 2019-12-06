@@ -24,7 +24,9 @@ const GameUI = (() => {
   const getDOMBoardCells = () => DOMBoardCells;
   const renderDOMBoard = (state) => {
     state.forEach((symbol, position) => {
-      DOMBoardCells[position].innerHTML = `${symbol}`;
+      let html = '';
+      html = `${symbol}`;
+      DOMBoardCells[position].innerHTML = html;
     });
   };
   const renderGameOverBoard = (winner, won = false) => {

@@ -56,7 +56,7 @@ const Game = (() => {
   //   winnerStatusUpdate(player);
   // };
   const playTurn = (player, position) => {
-    board.updateStatus(player.getSymbol(), position);
+    board.updateState(player.getSymbol(), position);
     winnerStatusUpdate(player);
     if (!isGameOver()) {
       playerTwo.playAsMachine(board.getFreePositions());
