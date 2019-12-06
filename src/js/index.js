@@ -13,11 +13,11 @@ const playerTwo = Player('machine', 'X', 'machine');
 const DOMBoardCells = GameUI.getDOMBoardCells();
 DOMBoardCells.forEach((cell, position) => {
   cell.addEventListener('click', () => {
+    // debugger;
     // run the game here
     const playOutcomeIsGameOver = Game.playTurn(playerOne, position);
     if (playOutcomeIsGameOver) GameUI.renderGameOverBoard(Game.getWinner(), playOutcomeIsGameOver);
-    else GameUI.renderDOMBoard();
-    // DOMBoardCells[position].innerHTML = playerOne.getSymbol();
+    else GameUI.renderDOMBoard(Board.currentState());
   }, { once: true });
 });
 const disableObjects = () => {
@@ -34,14 +34,17 @@ const prepareDOMForNewGame = () => {
 const startNewGame = () => {
   Board.reset();
   Game.init(playerOne, playerTwo, Board);
-  GameUI.renderDOMBoard(Board.state);
+  GameUI.renderDOMBoard(Board.currentState());
   prepareDOMForNewGame();
 };
 document.getElementById('start-new-game')
   .addEventListener('click', () => {
     startNewGame();
   }, { once: true });
-
+document.getElementById('play-again')
+  .addEventListener('click', () => {
+    startNewGame();
+  }, { once: true });
 window.addEventListener('load', () => {
 
 });
