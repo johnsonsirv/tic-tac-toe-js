@@ -23,10 +23,11 @@ const Player = (name, symbol, type = 'human') => {
     return myNextMove;
   };
   return {
+    play,
     getName,
     getSymbol,
     getType,
-    play,
+    playAsMachine,
   };
 };
 
