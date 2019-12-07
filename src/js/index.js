@@ -7,6 +7,7 @@ import GameUI from './gameui.js';
 
 let playerOne;
 let playerTwo;
+Board.reset();
 const DOMBoardCells = GameUI.getDOMBoardCells();
 
 const disableObjects = () => {
@@ -14,6 +15,8 @@ const disableObjects = () => {
     .setAttribute('disabled', 'disabled');
   document.getElementById('player-name')
     .setAttribute('disabled', 'disabled');
+  document.getElementById('welcome')
+    .setAttribute('class', 'no-display');
 };
 
 const prepareDOMForNewGame = () => {
@@ -21,11 +24,28 @@ const prepareDOMForNewGame = () => {
     .removeAttribute('class');
   disableObjects();
 };
+const persistToLocalStorage = (data) => localStorage.setItem('human', data);
+const getNameFromLocalStorage = () => {
+  let humanName;
+  if (localStorage.getItem('human') === null) {
+    humanName = document.getElementById('player-name').value;
+    persistToLocalStorage(humanName);
+  } else {
+    const storedName = localStorage.getItem('human');
+    const updatedName = document.getElementById('player-name').value;
+    if (storedName !== updatedName) {
+      persistToLocalStorage(updatedName);
+      document.getElementById('player-name').value = updatedName;
+      return updatedName;
+    }
+    humanName = storedName;
+  }
+  return humanName;
+};
 
 const startNewGame = () => {
-  Board.reset();
-  const humanName = document.getElementById('player-name').value;
-  playerOne = Player(humanName, 'O');
+  const humanPlayer = getNameFromLocalStorage();
+  playerOne = Player(humanPlayer, 'O');
   playerTwo = Player('machine', 'X');
   Game.init(playerOne, playerTwo, Board);
   GameUI.renderDOMBoard(Board.currentState());
@@ -44,11 +64,17 @@ DOMBoardCells.forEach((cell, position) => {
       const gameWinner = Game.getWinner();
       const won = gameWinner === null ? 0 : 1;
       GameUI
-        .renderGameOverBoard(gameWinner.getName(), Board.currentState(), won);
+        .renderGameOverBoard(gameWinner, Board.currentState(), won);
     } else GameUI.renderDOMBoard(Board.currentState());
   }, { once: true });
 });
 
-window.addEventListener('load', () => {
+const rememberPlayerName = () => {
+  if (localStorage.getItem('human') !== null) {
+    document.getElementById('player-name').value = localStorage.getItem('human');
+  }
+};
 
+window.addEventListener('load', () => {
+  rememberPlayerName();
 });

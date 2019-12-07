@@ -10,14 +10,14 @@ const GameUI = (() => {
     });
   };
   const renderGameOverBoard = (winner, state, won = 0) => {
-    renderDOMBoard(state);
-    const gameOverMessage = won === 1 ? `Game Over. ${winner} wins!!!` : 'Game Tie';
+    const gameOverMessage = won === 1 ? `Game Over. ${winner.getName()} wins!!!` : 'Game Tie';
     document.getElementById('gameover-status')
       .innerHTML = gameOverMessage;
     document.getElementById('gameover-board')
       .removeAttribute('class');
     document.getElementById('mainboard')
       .setAttribute('class', 'disable-click');
+    renderDOMBoard(state);
   };
   return {
     getDOMBoardCells,

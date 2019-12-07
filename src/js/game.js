@@ -13,6 +13,7 @@ const Game = (() => {
     board = _board;
     winner = null;
   };
+  const getHumanPlayer = () => playerOne;
   const getWinner = () => winner;
   const checkWin = (playerPositions) => {
     return WINNING_COMBINATIONS.some((combo) => {
@@ -47,6 +48,7 @@ const Game = (() => {
     init,
     isGameOver,
     playTurn,
+    getHumanPlayer,
   };
 })();
 

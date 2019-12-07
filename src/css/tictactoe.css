@@ -1,11 +1,20 @@
-header{
+body {
   font-family: 'Fredoka One', cursive;
+}
+header{
   font-size: 1.7em;
   text-align: center;
 }
 #game-control {
   text-align: center;
   margin: auto;
+}
+#welcome { 
+  margin: auto;
+  text-align: justify;
+  line-height: 1.2em;
+  font-size: 1.5em;
+  width: 510px;
 }
 #mainboard {
   display: grid;
@@ -20,7 +29,6 @@ header{
   width: 170px;
   height: 170px;
   border: solid 2px;
-  font-family: 'Fredoka One', cursive;
   font-size: 8em;
   text-align: center;
   padding: 0;
@@ -28,22 +36,18 @@ header{
 }
 .no-display {
   display: none;
-  height: 50%;
-  width: 30%;
-  border: solid 1px;
 }
 #gameover-board {
   position: absolute;
-  left: 420px;
-  top: 15%;
-  width: 530px;
+  left: 421px;
+  top: 16%;
+  width: 509px;
   height: 490px;
-  font-family: 'Fredoka One', cursive;
   font-size: 3em;
   margin: auto;
   background-color: rgba(3, 2, 2, 0.37);
   color: #fff;
 }
-a { text-decoration: none;}
+a:link, a:visited { text-decoration: none;}
 a:hover { text-decoration: underline;}
 .disable-click { pointer-events:none; }
