@@ -2,21 +2,17 @@
 /* eslint-disable import/extensions */
 
 import Player from '../src/js/player.js';
-import GameUI from '../src/js/gameui.js';
+
+const victor = Player('Victor', 'X');
+const computerPlayer = Player('machine', 'O');
 
 describe('game player and symbol for the game', () => {
   it('creates a new player and set his symbol for the game', () => {
-    const victor = Player('Victor', 'X', 'human');
-    const computerPlayer = Player('Computer', 'O', 'machine');
     expect(victor.getSymbol()).toEqual('X');
     expect(computerPlayer.getSymbol()).toEqual('O');
   });
-  it('should play if the game passes my symbol', () => {
-    const victor = Player('Victor', 'X');
-    const computerPlayer = Player('Computer', 'O');
-    spyOn(victor, 'play').withArgs('X', GameUI).and.returnValue(2);
-    spyOn(computerPlayer, 'playAsComputer').withArgs([1, 2, 3]).and.returnValue(null);
-    expect(victor.play('X', GameUI)).not.toBeNull();
-    expect(computerPlayer.playAsComputer([1, 2, 3])).not.toBeNull();
+  it('should play as computer', () => {
+    spyOn(computerPlayer, 'playAsMachine').withArgs([1, 2, 3]).and.returnValue(1);
+    expect(computerPlayer.playAsMachine([1, 2, 3])).not.toBeNull();
   });
 });

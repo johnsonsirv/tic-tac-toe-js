@@ -5,61 +5,65 @@ import Player from '../src/js/player.js';
 import Board from '../src/js/board.js';
 import Game from '../src/js/game.js';
 
-beforeAll(() => {
-  // const player1 = Player('Victor', 'X');
-  // const player2 = Player('Computer', 'O', 'machine');
-  // const game = Game(player1, player2, Board);
-});
-let player1 = Player('Victor', 'X');
-let player2 = Player('Computer', 'O', 'machine');
-let game = Game(player1, player2, Board);
+const player1 = Player('Victor', 'X');
+const player2 = Player('Computer', 'O');
 afterAll(() => {
   Board.reset();
-  player1 = null;
-  player2 = null;
-  game = null;
 });
-describe('game first player', () => {
-  it('should determine 1st player randomly; board state does not contain that symbol', () => {
-    Board.state = [];
-    const firstPlayer = game.firstPlayer();
-    expect(Board.state.includes(firstPlayer.getSymbol())).toEqual(false);
+describe('#init', () => {
+  it('it initializes a new game', () => {
+    Board.reset();
+    Game.init(player1, player2, Board);
+    expect(Game.getHumanPlayer().getSymbol()).toEqual('X');
   });
 });
-describe('game current player', () => {
-  it('should swap game turn between players', () => {
-    game.playerTurn = 0;
-    const currentPlayer = game.currentPlayer();
-    expect(currentPlayer.getSymbol()).toEqual(player2.getSymbol());
-  });
-});
-describe('make move in the game', () => {
+
+describe('#play turn', () => {
   it('should position the player\'s move on the board', () => {
-    game.makeMove(player2, 3);
-    expect(Board.state[3]).toEqual('O');
+    Board.reset();
+    Game.init(player1, player2, Board);
+    Game.playTurn(player1, 3);
+    expect(Board.currentState()[3]).toEqual('X');
   });
 });
-describe('update winner status', () => {
-  it('should update game winner to current player if player move results to a win', () => {
-    Board.state = ['X', 'X', 'X'];
-    game.winnerStatusUpdate(player1);
-    const winner = game.getWinner();
-    expect(winner.getSymbol()).toEqual(player1.getSymbol());
+
+describe('#get winner', () => {
+  it('should return null when there is no winner', () => {
+    Board.reset();
+    Game.init(player1, player2, Board);
+    expect(Game.getWinner()).toBeNull();
   });
-  it('should NOT update winner status when current player move does NOT result to win.', () => {
-    Board.state = ['X'];
-    game.winnerStatusUpdate(player1);
-    const winner = getWinner();
-    expect(winner).toBeNull();
+  it('should not return null when there is a winner', () => {
+    Board.reset();
+    Game.init(player1, player2, Board);
+    Board.updateState('X', 0);
+    Board.updateState('X', 1);
+    Game.playTurn(player1, 2);
+    expect(Game.getWinner()).not.toBeNull();
   });
 });
-describe('game over status', () => {
+
+describe('#game over status', () => {
   it('should return true when game outcome is a tie', () => {
-    Board.state = ['X', 'O', 'O', 'O', 'X', 'X', 'X', 'X', 'O'];
-    expect(game.isGameOver()).toEqual(true);
+    Board.reset();
+    Game.init(player1, player2, Board);
+    let i = 0;
+    while (i <= 4) {
+      Board.updateState('X', i);
+      Board.updateState('O', i + 1);
+      i += 2;
+    }
+    Board.updateState('O', 6);
+    Board.updateState('X', 7);
+    Board.updateState('O', 8);
+    expect(Game.isGameOver()).toEqual(true);
   });
   it('should return true when game outcome has a winner', () => {
-    Board.state = ['X', 'X', 'X'];
-    expect(game.isGameOver()).toEqual(true);
+    Board.reset();
+    Game.init(player1, player2, Board);
+    Board.updateState('X', 0);
+    Board.updateState('X', 1);
+    Game.playTurn(player1, 2);
+    expect(Game.isGameOver().getSymbol()).toEqual('X');
   });
 });

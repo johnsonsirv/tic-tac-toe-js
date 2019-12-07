@@ -23,7 +23,7 @@ describe('Board state #isFull()', () => {
 });
 describe('Board state #isPositionFree()', () => {
   it('should return true if specified position is NOT occupied', () => {
-    Board.state[5] = 'O';
+    Board.updateState('O', 5);
     expect(Board.isPositionFree(4)).toBe(true);
   });
   it('should return false if specified position is occupied', () => {
