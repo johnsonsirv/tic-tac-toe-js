@@ -9,16 +9,15 @@ const GameUI = (() => {
       DOMBoardCells[position].innerHTML = html;
     });
   };
-  const removeListenersOnGameover = () => {
-    DOMBoardCells.forEach((cell) => cell.removeEventListener('click', () => {}));
-  };
-  const renderGameOverBoard = (winner, won = false) => {
-    const gameOverMessage = won ? `GameOver: ${winner} wins!!!` : 'Game Tie';
+  const renderGameOverBoard = (winner, state, won = 0) => {
+    renderDOMBoard(state);
+    const gameOverMessage = won === 1 ? `Game Over. ${winner} wins!!!` : 'Game Tie';
     document.getElementById('gameover-status')
       .innerHTML = gameOverMessage;
     document.getElementById('gameover-board')
       .removeAttribute('class');
-    removeListenersOnGameover();
+    document.getElementById('mainboard')
+      .setAttribute('class', 'disable-click');
   };
   return {
     getDOMBoardCells,

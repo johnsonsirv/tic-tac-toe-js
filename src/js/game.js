@@ -14,17 +14,20 @@ const Game = (() => {
     winner = null;
   };
   const getWinner = () => winner;
+  const checkWin = (playerPositions) => {
+    return WINNING_COMBINATIONS.some((combo) => {
+      return combo.every((pos) => playerPositions.includes(pos));
+    });
+  };
   const winnerStatusUpdate = (player) => {
     const playerPositions = [];
     board.currentState().forEach((elem, indx) => {
       if (elem === player.getSymbol()) playerPositions.push(indx);
     });
-    WINNING_COMBINATIONS.forEach((winningCase) => {
-      if ((winningCase && playerPositions).length === 3) {
-        winner = player;
-        // return winner;
-      }
-    });
+    if (checkWin(playerPositions)) {
+      winner = player;
+      return winner;
+    }
   };
   const draw = () => board.isFull();
   const isGameOver = () => getWinner() || draw();

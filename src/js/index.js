@@ -5,46 +5,50 @@ import Board from './board.js';
 import Game from './game.js';
 import GameUI from './gameui.js';
 
-function playerNameFromDOM() {
-  return document.getElementById('player-name').value;
-}
-const playerOne = Player(playerNameFromDOM(), 'O');
-const playerTwo = Player('machine', 'X', 'machine');
+let playerOne;
+let playerTwo;
 const DOMBoardCells = GameUI.getDOMBoardCells();
-DOMBoardCells.forEach((cell, position) => {
-  cell.addEventListener('click', () => {
-    // debugger;
-    // run the game here
-    const playOutcomeIsGameOver = Game.playTurn(playerOne, position);
-    if (playOutcomeIsGameOver) GameUI.renderGameOverBoard(Game.getWinner(), playOutcomeIsGameOver);
-    else GameUI.renderDOMBoard(Board.currentState());
-  }, { once: true });
-});
+
 const disableObjects = () => {
   document.getElementById('start-new-game')
     .setAttribute('disabled', 'disabled');
   document.getElementById('player-name')
     .setAttribute('disabled', 'disabled');
 };
+
 const prepareDOMForNewGame = () => {
   document.getElementById('board-section')
     .removeAttribute('class');
   disableObjects();
 };
+
 const startNewGame = () => {
   Board.reset();
+  const humanName = document.getElementById('player-name').value;
+  playerOne = Player(humanName, 'O');
+  playerTwo = Player('machine', 'X');
   Game.init(playerOne, playerTwo, Board);
   GameUI.renderDOMBoard(Board.currentState());
   prepareDOMForNewGame();
 };
+
 document.getElementById('start-new-game')
   .addEventListener('click', () => {
     startNewGame();
   }, { once: true });
-document.getElementById('play-again')
-  .addEventListener('click', () => {
-    startNewGame();
+
+DOMBoardCells.forEach((cell, position) => {
+  cell.addEventListener('click', () => {
+    const playOutcomeIsGameOver = Game.playTurn(playerOne, position);
+    if (playOutcomeIsGameOver) {
+      const gameWinner = Game.getWinner();
+      const won = gameWinner === null ? 0 : 1;
+      GameUI
+        .renderGameOverBoard(gameWinner.getName(), Board.currentState(), won);
+    } else GameUI.renderDOMBoard(Board.currentState());
   }, { once: true });
+});
+
 window.addEventListener('load', () => {
 
 });

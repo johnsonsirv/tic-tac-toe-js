@@ -1,9 +1,18 @@
+header{
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.7em;
+  text-align: center;
+}
+#game-control {
+  text-align: center;
+  margin: auto;
+}
 #mainboard {
   display: grid;
-  grid-template-columns: 30% 30% 30%;
-  /* border: solid 2px; */
-  width: 30%;
-  height: 50%;
+  grid-template-columns: 170px 170px 170px;
+  border: inset 18px;
+  width: 510px;
+  height: 510px;
   margin: auto;
   gap: 0;
 }
@@ -23,3 +32,18 @@
   width: 30%;
   border: solid 1px;
 }
+#gameover-board {
+  position: absolute;
+  left: 420px;
+  top: 15%;
+  width: 530px;
+  height: 490px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 3em;
+  margin: auto;
+  background-color: rgba(3, 2, 2, 0.37);
+  color: #fff;
+}
+a { text-decoration: none;}
+a:hover { text-decoration: underline;}
+.disable-click { pointer-events:none; }
