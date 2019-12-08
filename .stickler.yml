@@ -6,3 +6,5 @@ linters:
 files:
   ignore:
       - 'dist/*'
+      - 'src/js/lib/*'
+      - 'spec/*'

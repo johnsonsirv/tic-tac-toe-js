@@ -15,11 +15,10 @@ const Game = (() => {
   };
   const getHumanPlayer = () => playerOne;
   const getWinner = () => winner;
-  const checkWin = (playerPositions) => {
-    return WINNING_COMBINATIONS.some((combo) => {
-      return combo.every((pos) => playerPositions.includes(pos));
-    });
-  };
+  const checkWin = (playerPositions) => WINNING_COMBINATIONS
+    .some((combo) => combo
+      .every((pos) => playerPositions.includes(pos)));
+
   const winnerStatusUpdate = (player) => {
     const playerPositions = [];
     board.currentState().forEach((elem, indx) => {
@@ -27,8 +26,8 @@ const Game = (() => {
     });
     if (checkWin(playerPositions)) {
       winner = player;
-      return winner;
     }
+    return winner;
   };
   const draw = () => board.isFull();
   const isGameOver = () => getWinner() || draw();
