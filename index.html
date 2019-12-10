@@ -2,12 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+   <!-- <meta http-equiv="refresh" content="5" > -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Tic-tac-toe</title>
+  <link href="/src/css/tictactoe.css" rel="stylesheet" />
 </head>
 <body>
-  
-  
+  <header>Tic Tac Toe Game </header>
+  <section id="game-control">
+    <p>Player Name: <input type="text" id="player-name" required="required"><button id="start-new-game">New Game</button></p>
+  </section>
+  <section id="welcome">
+     <p>Tic Tac Toe is a paper-and-pencil game for two players, using X and O marks.
+
+        Players take turns marking the spaces in a 3×3 grid.
+        
+        The player who succeeds in placing three of their marks in a
+        
+        horizontal, vertical, or diagonal row wins the game. <br>
+        <a href="https://en.wikipedia.org/wiki/Tic-tac-toe" target="_blank"> See [Game Rules & Strategy] </a>
+     </p>
+    <p>
+      <img src="assets/images/200px-Tic_tac_toe.svg.png" alt="tictactoe-demo">
+    </p>
+  </section>
+  <section id="board-section" class="no-display">
+    <div id="mainboard">
+      <div data-id="0" class="cell"> </div>
+      <div data-id="1" class="cell"> </div>
+      <div data-id="2" class="cell"> </div>
+      <div data-id="3" class="cell"> </div>
+      <div data-id="4" class="cell"> </div>
+      <div data-id="5" class="cell"> </div>
+      <div data-id="6" class="cell"> </div>
+      <div data-id="7" class="cell"> </div>
+      <div data-id="8" class="cell"> </div>
+    </div>
+  </section>
+  <section id="gameover-board" class="no-display">
+    <p id="gameover-status"></p>
+    <a id="play-again" href="/">Play Again ?</a>
+  </section>
+  <script type="module" src="src/js/index.js"></script>
 </body>
 </html>
